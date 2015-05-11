@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Mon Site !</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}"/>
+</head>
+<body>
+{% with menu = ['Bibli', 'Musique', 'Cv', 'Contact'] %}
+{# commentaire #}
+<nav>
+	<ul>
+		<li id="nom">Ethan CHAMIK</li>
+        {% for menu in menu %}
+		<li><a href="{{ menu }}.html">{{ menu }}</a></li>
+        {% endfor %}
+	</ul>
+</nav>
+{% endwith %}
+<div id="corps">
+{% block corps %}{% endblock %}
+</div>
+
+</body>
+</html>
