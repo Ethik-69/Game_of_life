@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Mon Site !</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}"/>
+</head>
+<body>
+<nav>
+	<ul>
+		<li id="nom">Ethan CHAMIK</li>
+		<li><a href="index.html">à propos de moi</a></li>
+		<li><a href="#">Musique</a></li>
+        <li><a href="CV.html">CV</a></li>
+        <li><a href="Contact.html">Contact</a></li>
+	</ul>
+</nav>
+<div id="corps">
+<h1>Me contacter :</h1>
+
+<p>Mon numéro : 06 13 56 29 94</p>
+<p>Mon Email : ethancmk@hotmail.fr</p>
+<p>Mon facebook : Ethan Chamik</p>
+
+<form>
+    <label for ="nom" > Votre nom :</label><input type ="text" name ="nom" /><br />
+    <input type="radio" name="choix" value="choix 1" /><label for = "choix 1"> premier choix</label><br />
+    <input type="submit" />
+
+
+</form>
+
+</div>
+
+</body>
+</html>

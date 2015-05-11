@@ -1,0 +1,52 @@
+body{
+	margin:0;
+	background-image: url('img/wallpaper.jpg');
+}
+
+#corps{
+    background: white;
+	width : 45%;
+	min-height: 800px;
+	margin: auto;
+}
+
+html{
+	width: 100%;
+}
+
+nav{
+	background-color: #008080;
+	padding: 10px 10px 10px 10px;
+ }
+
+ul{
+	text-align: center;
+	margin-right: 20%;
+}
+
+#nom{
+	position: relative;
+	right: 15%;
+}
+
+li{
+	display : inline-block;
+	margin-left: 40px;
+	margin-right: 40px;
+	font-size: 30px;
+	font-family: impact;
+}
+
+a {
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+}
+
+p{
+	background-color: black;
+    color: darkblue;
+}
