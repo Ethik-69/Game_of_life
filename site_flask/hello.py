@@ -24,13 +24,13 @@ def test():
 @app.route('/contact/', methods=['GET', 'POST'])
 def contact():
     if request.method == 'GET':
-       return render_template('contact.html', titre="Contact")
+       return render_template('corps_contact.html', titre="Contact")
     else:
-        return render_template('contact.html', titre="Contact")
+        return render_template('corps_contact.html', titre="Contact")
 
 #@app.route('/contact/')
 #def contact():
-#    return render_template('contact.html', titre="Contact")
+#    return render_template('corps_contact.html', titre="Contact")
 
 
 if __name__ == '__main__':
