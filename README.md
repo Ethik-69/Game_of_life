@@ -4,3 +4,4 @@ Site Flask -> site fait en Python avec flask (= sinatra)
 jeu de la vie -> https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life  
 bataille navale -> un petit jeu de bataille navale 1 joueur 2 bateaux  
 Chiffre aléatoire -> un nombre entre 0 et 500 à été générer aléatoirement, a vous de le retrouver  
+live rando -> Chiffre aléatoire en live
