@@ -42,13 +42,9 @@ def etat_suivant(tab):
     for i in range(0, 50):
         for j in range(0, 50):
             nb_vivante = alive(tab, i, j)
-            if nb_vivante == 2:
-                tab2[i, j] = 0
-            elif nb_vivante == 3:
-                tab2[i, j] = 0
-            elif nb_vivante > 3:
+            if nb_vivante % 2 ==0:
                 tab2[i, j] = 1
-            elif tab[i, j] == 1 and nb_vivante == 3:
+            else:
                 tab2[i, j] = 0
     return tab2
 
@@ -82,15 +78,16 @@ for i in range(0, 50):
         plateau0[i,j]=plateau[i,j]=1
 
 
-pixel.marquer(2, 2, 0)
+pixel.marquer(40, 10, 0)
+pixel.marquer(41, 10, 0)
+pixel.marquer(42, 10, 0)
 
 pixel.afficher(1)
 l = 0
 
 plateau = read(plateau0)
-
+print(plateau)
 for l in range(0, 100):
-    print(plateau)
     plateau = main(plateau)
 
 
