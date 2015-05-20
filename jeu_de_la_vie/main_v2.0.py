@@ -14,40 +14,38 @@ def read(tab):
     ##############################################
     for i in range(0, 50):
         for j in range(0, 50):
-            tab[i, j] = int(pixel.lire(i, j))
+            tab[i][j] = int(pixel.lire(i, j))
     return tab
-
 
 def alive(tab, i, j):
     ##############################################
     'renvoi le nb de voisin vivant'
     ##############################################
     vivante = 0
-    if tab[i, j] == 0 :
+    if tab[i][j] == 0 :
         vivante -= 1
-    i = i - 1
-    j = j + 1
-    for x in range(i, j):
-        for y in range(i, j):
-            if tab[x, y] == 0 :
+    for x in range(i-1, i+1):
+        for y in range(j-1, j+1):
+            if tab[x][y] == 0 :
                 vivante += 1
     return vivante
-
 
 def etat_suivant(tab):
     ##############################################
     'calcul l\'etat suivant'
     ##############################################
-    tab2 = numpy.zeros((50, 50), dtype=numpy.uint32)
+    tab2=[]
+    for i in range(0, 50):
+        tab2.append([1]*50)
     for i in range(0, 50):
         for j in range(0, 50):
             nb_vivante = alive(tab, i, j)
-            if nb_vivante % 2 ==0:
-                tab2[i, j] = 1
+            print(nb_vivante)
+            if nb_vivante % 2 != 0:
+                tab2[i][j] = 1
             else:
-                tab2[i, j] = 0
+                tab2[i][j] = 0
     return tab2
-
 
 def write(tab):
     ##############################################
@@ -55,10 +53,7 @@ def write(tab):
     ##############################################
     for i in range(0, 50):
         for j in range(0, 50):
-            if tab[i, j] == 0:
-                pixel.marquer(i, j, 0)
-            else:
-                pixel.marquer(i, j, 1)
+                pixel.marquer(i, j, tab[i][j])
     pixel.afficher(1)
 
 def main(tab):
@@ -70,31 +65,26 @@ def main(tab):
     write(tab2)
     return tab2
 
-
-plateau0 = numpy.zeros((50, 50), dtype=numpy.uint32)
-plateau = numpy.zeros((50, 50), dtype=numpy.uint32)
+plateau=[]
+plateau0=[]
 for i in range(0, 50):
-    for j in range(0, 50):
-        plateau0[i,j]=plateau[i,j]=1
-
+    plateau.append([1]*50)
+    plateau0.append([1]*50)
 
 pixel.marquer(40, 10, 0)
 pixel.marquer(41, 10, 0)
 pixel.marquer(42, 10, 0)
+pixel.marquer(6, 40, 0)
+pixel.marquer(7, 40, 0)
+pixel.marquer(8, 40, 0)
 
 pixel.afficher(1)
 l = 0
 
 plateau = read(plateau0)
 print(plateau)
-for l in range(0, 100):
+for l in range(0, 10000):
     plateau = main(plateau)
-
-
-
-
-input()
-
 
 #pixel.lire() lire un pixel
 #pixel.initialiser(largeur, hauteur, zoom) pose le tableau
