@@ -10,7 +10,7 @@ pixel.initialiser(largeur, hauteur, zoom)
 
 def read(tab):
     ##############################################
-    'lit l\'etat des cellules du tableau''
+    'lit l\'etat des cellules du tableau'
     ##############################################
     for i in range(0, 50):
         for j in range(0, 50):
@@ -38,38 +38,64 @@ def etat_suivant(tab):
     ##############################################
     'calcul l\'etat suivant'
     ##############################################
-    nb_vivante = alive(tab, i, j)
-    if nb_vivante == 2 :
-        tab[i, j] = 0
-    elif nb_vivante == 3 :
-        tab[i, j] = 0
-    elif nb_vivante > 3:
-        tab[i, j] = 1
-    elif tab[i, j] == 1 and nb_vivante == 3:
-        tab[i, j] = 0
+    tab2 = numpy.zeros((50, 50), dtype=numpy.uint32)
+    for i in range(0, 50):
+        for j in range(0, 50):
+            nb_vivante = alive(tab, i, j)
+            if nb_vivante == 2:
+                tab2[i, j] = 0
+            elif nb_vivante == 3:
+                tab2[i, j] = 0
+            elif nb_vivante > 3:
+                tab2[i, j] = 1
+            elif tab[i, j] == 1 and nb_vivante == 3:
+                tab2[i, j] = 0
+    return tab2
 
+
+def write(tab):
+    ##############################################
+    'change les pixels'
+    ##############################################
+    for i in range(0, 50):
+        for j in range(0, 50):
+            if tab[i, j] == 0:
+                pixel.marquer(i, j, 0)
+            else:
+                pixel.marquer(i, j, 1)
+    pixel.afficher(1)
 
 def main(tab):
     ##############################################
     'main'
     ##############################################
-    plateau = read(tab)
-    for i in range(0, 49):
-        for j in range(0, 49):
-            tab2 = etat_suivant(tab)
-    pixel.afficher(0.3)
+    print('main')
+    tab2 = etat_suivant(tab)
+    write(tab2)
+    return tab2
 
 
-
-
+plateau0 = numpy.zeros((50, 50), dtype=numpy.uint32)
 plateau = numpy.zeros((50, 50), dtype=numpy.uint32)
+for i in range(0, 50):
+    for j in range(0, 50):
+        plateau0[i,j]=plateau[i,j]=1
+
+
 pixel.marquer(2, 2, 0)
-pixel.marquer(2, 3, 0)
-pixel.marquer(2, 4, 0)
-pixel.afficher(0.3)
+
+pixel.afficher(1)
 l = 0
+
+plateau = read(plateau0)
+
 for l in range(0, 100):
-    main(plateau)
+    print(plateau)
+    plateau = main(plateau)
+
+
+
+
 input()
 
 
@@ -77,6 +103,3 @@ input()
 #pixel.initialiser(largeur, hauteur, zoom) pose le tableau
 #pixel.marquer(i, j, 0) change etat pixel 0 on 1 off
 #pixel.afficher() affiche le(s) pixel ?
-
-#mettre l'état des cellules dans un dico {on/off : 0/1}
-#faire les passe avec deux for pour le test et l'affichage
