@@ -1,82 +1,82 @@
 #!/usr/bin/env python3
-from random import randint
-import os
 import pixel
+import numpy
 
-largeur = 100
-hauteur = 100
-zoom = 5
-#x = int(input('x :'))
-#y = int(input('y :'))
-l = 500
-x = y = []
-
-#remplie tableau x et y
-for i in range(0, l):
-	x.append(i)
-	y.append(i)
-
-def cadre():
-	for i in range(0, 200):
-#haut
-			pixel.marquer(0, y[i])
-#gauche			
-			pixel.marquer(x[i], 0)
-#droite	
-			pixel.marquer(199, y[i])
-#bas
-			pixel.marquer(x[i], 199)
-
-#test les 8 case autour de x, y
-def testviemort(x, y):
-    viemorte = []
-    viemorte.append(int(pixel.lire(x-1, y-1)))
-    viemorte.append(int(pixel.lire(x, y-1)))
-    viemorte.append(int(pixel.lire(x+1, y-1)))
-    viemorte.append(int(pixel.lire(x+1, y)))
-    viemorte.append(int(pixel.lire(x+1, y+1)))
-    viemorte.append(int(pixel.lire(x, y+1)))
-    viemorte.append(int(pixel.lire(x-1, y+1)))
-    viemorte.append(int(pixel.lire(x-1, y)))
-    return viemorte
+largeur = 50
+hauteur = 50
+zoom = 10
 
 pixel.initialiser(largeur, hauteur, zoom)
-viemorte = []
 
+def read(tab):
+    ##############################################
+    'lit l\'etat des cellules du tableau''
+    ##############################################
+    for i in range(0, 50):
+        for j in range(0, 50):
+            tab[i, j] = int(pixel.lire(i, j))
+    return tab
+
+
+def alive(tab, i, j):
+    ##############################################
+    'renvoi le nb de voisin vivant'
+    ##############################################
+    vivante = 0
+    if tab[i, j] == 0 :
+        vivante -= 1
+    i = i - 1
+    j = j + 1
+    for x in range(i, j):
+        for y in range(i, j):
+            if tab[x, y] == 0 :
+                vivante += 1
+    return vivante
+
+
+def etat_suivant(tab):
+    ##############################################
+    'calcul l\'etat suivant'
+    ##############################################
+    nb_vivante = alive(tab, i, j)
+    if nb_vivante == 2 :
+        tab[i, j] = 0
+    elif nb_vivante == 3 :
+        tab[i, j] = 0
+    elif nb_vivante > 3:
+        tab[i, j] = 1
+    elif tab[i, j] == 1 and nb_vivante == 3:
+        tab[i, j] = 0
+
+
+def main(tab):
+    ##############################################
+    'main'
+    ##############################################
+    plateau = read(tab)
+    for i in range(0, 49):
+        for j in range(0, 49):
+            tab2 = etat_suivant(tab)
+    pixel.afficher(0.3)
+
+
+
+
+plateau = numpy.zeros((50, 50), dtype=numpy.uint32)
 pixel.marquer(2, 2, 0)
 pixel.marquer(2, 3, 0)
 pixel.marquer(2, 4, 0)
-pixel.marquer(2, 5, 0)
+pixel.afficher(0.3)
+l = 0
+for l in range(0, 100):
+    main(plateau)
+input()
 
 
-k = 0
-z = 1
-while z == 1:
-    for i in range(1, 99):
-        for j in range(1, 99):
-            k += 1
-            viemorte = testviemort(i, j)
-            vivante = viemorte.count(0)
-            if vivante == 2:
-                pixel.marquer(i, j, 0)
-            elif vivante == 3:
-                pixel.marquer(i, j, 0)
-            elif vivante < 2:
-                pixel.marquer(i, j, 1)
-            elif vivante > 3:
-                pixel.marquer(i, j, 1)
-            elif vivante == 3:
-                pixel.marquer(i, j, 0)
-            pixel.afficher(0.0000000000000000000000000000000001)
+#pixel.lire() lire un pixel
+#pixel.initialiser(largeur, hauteur, zoom) pose le tableau
+#pixel.marquer(i, j, 0) change etat pixel 0 on 1 off
+#pixel.afficher() affiche le(s) pixel ?
 
-print(k)
-
-
-#for i in range(0, 1000000):
-#	pixel.marquer(x[randint(2, 97)], y[randint(2, 97)], 0)
-#	pixel.marquer(x[randint(2, 97)], y[randint(2, 97)], 1)
-#	pixel.afficher(0.0001) #pause de 0.0001 sec
-#	print(pixel.lire(5, 6))
-pixel.afficher()
-
-#2 le jeu de la vie : http://lionel.chaussade.free.fr/Site_3/Accueil_files/TP6.pdf
+#mettre l'état des cellules dans un dico {on/off : 0/1}
+#faire les passe avec deux for pour le test et l'affichage
