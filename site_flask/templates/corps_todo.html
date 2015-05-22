@@ -1,0 +1,20 @@
+{% extends 'squel.index.html' %}
+{% block titre %}Contact{% endblock %}
+
+{% block corps %}
+<form method="POST" enctype="multipart/form-data">
+    <label for ="task" >Task :</label><input type ="text" name ="task" /><br />
+    <input type="checkbox" name="check" value="check" /><label for = "check">Voulez vous ajouter un fichier ?</label><br />
+    <input type="file" name="fichier" /><br />
+    <input type="submit" />
+</form>
+{% endblock %}
+
+
+{% block recup %}
+    {% for m in selec %}
+        <p>{{ m['name'] }}</p>
+    {% endfor %}
+{% endblock %}
+
+

@@ -5,21 +5,35 @@
 	<title>{% block titre %}Mon Site !{% endblock %}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}"/>
 </head>
+
 <body>
-{% with menu = ['Bibli', 'Musique', 'Cv', 'Contact'] %}
-{# commentaire #}
-<nav>
-	<ul>
-		<li id="nom">Ethan CHAMIK</li>
-        {% for menu in menu %}
-		<li><a href="{{ menu }}.html">{{ menu }}</a></li>
+    {% with menu = ['a propos de moi', 'Musique', 'Cv', 'ToDo'], lien = ['/', 'musique', 'cv', 'todo'] %}
+    <nav>
+	    <ul>
+		    <li id="nom">Ethan CHAMIK</li>
+		    <li><a href="{{ lien[0] }}">{{ menu[0] }}</a></li>
+		    <li><a href="{{ lien[1] }}">{{ menu[1] }}</a></li>
+		    <li><a href="{{ lien[2] }}">{{ menu[2] }}</a></li>
+		    <li><a href="{{ lien[3] }}">{{ menu[3] }}</a></li>
+	    </ul>
+    </nav>
+    {% endwith %}
+
+    <div id="corps">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+        {% for m in messages %}
+            <li>{{ m }}</li>
         {% endfor %}
-	</ul>
-</nav>
-{% endwith %}
-<div id="corps">
-{% block corps %}{% endblock %}
-</div>
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% block corps %}{% endblock %}
+    {% block recup %}{% endblock %}
+    </div>
 
 </body>
 </html>
