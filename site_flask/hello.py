@@ -48,10 +48,15 @@ def index():
     da = date.today().isoformat()
     return render_template('corps_index.html', titre="Bienvenue !", mots=mots, date=da)
 
+def requet(nom, date):
+    rdb.db('todoapp').table('todos').insert([{ 'name' : nom, 'date' : date}]).run(g.rdb_conn)
+    flash('Task Added')
 
-def requet(task):
-    flash('{}'.format(task))
-    rdb.db('todoapp').table('todos').insert([{ 'name' : '{}'.format(task) }])
+
+
+def delete(id):
+    rdb.db('todoapp').table("todos").get(id).delete().run(g.rdb_conn)
+    flash('Task Deleted : '+id)
 
 
 
@@ -61,10 +66,12 @@ def todo():
         flash('ToDo :')
     else:
         if request.method == 'POST':
-            requet(request.form['task'])
-
-    selection = list(rdb.table('todos').run(g.rdb_conn))
-    return render_template('corps_todo.html', titre="Contact", selec=selection)
+            if request.form['submit'] == 'add':
+                requet(request.form['nom'], request.form['date'])
+            elif request.form['submit'] == 'X':
+                delete(request.form['del'])
+    list_task = list(rdb.table('todos').run(g.rdb_conn))
+    return render_template('corps_todo.html', titre="Contact", list_task=list_task)
 
 
 
