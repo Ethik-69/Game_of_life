@@ -1,10 +1,11 @@
 # Python
-Horloge -> une 'horloge' fait en Python avec le module pixel  
+Horloge -> une 'horloge' fait en Python avec le module pixel
+
     lancez horloge.py
 
 Site Flask -> site fait en Python avec flask (= sinatra)  
-    installation de Flask => http://flask.pocoo.org/docs/0.10/installation/
     
+    installation de Flask => http://flask.pocoo.org/docs/0.10/installation/
     (en sautant l'étape des virtual-env)
     lancez hello.py
 
