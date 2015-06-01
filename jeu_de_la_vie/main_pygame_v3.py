@@ -137,18 +137,18 @@ def accueil():
                 accueil = False
 
 def main_font():
-    font = pygame.font.Font('fonts/visitor1.ttf', 20)
+    font = pygame.font.Font('fonts/visitor1.ttf', 15)
 
     init_text = font.render("Initialiser", 1, (255, 255, 255))
-    init_text_pos = init_text.get_rect(centerx=0, centery=0)
+    init_text_pos = init_text.get_rect(centerx=55, centery=20)
     background.blit(init_text, init_text_pos)
 
     start_text = font.render("Start", 1, (255, 255, 255))
-    start_text_pos = start_text.get_rect(centerx=10, centery=60)
+    start_text_pos = start_text.get_rect(centerx=55, centery=60)
     background.blit(start_text, start_text_pos)
 
     stop_text = font.render("Stop", 1, (255, 255, 255))
-    stop_text_pos = stop_text.get_rect(centerx=10, centery=110)
+    stop_text_pos = stop_text.get_rect(centerx=55, centery=110)
     background.blit(stop_text, stop_text_pos)
     return background
 
@@ -160,18 +160,19 @@ temp_pause = 0
 
 accueil()
 
-background = main_font()
-
 background.fill((100, 25, 25))
+
+init_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 10, 90, 40])
+start_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 60, 90, 40])
+stop_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 110, 90, 40])
+
+main_font()
+
 fenetre.blit(background, (0, 0))
 pygame.display.flip()
 
 while fonctionnement:
     mouse_xy = pygame.mouse.get_pos()
-
-    init_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 10, 90, 40])
-    start_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 60, 90, 40])
-    stop_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 110, 90, 40])
 
     init_on = init_bouton.collidepoint(mouse_xy)
     start_on = start_bouton.collidepoint(mouse_xy)
