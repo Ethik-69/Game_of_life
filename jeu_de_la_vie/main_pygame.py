@@ -36,7 +36,6 @@ def afficher(plateau):
             elif plateau[i][j] == 2: couleur = [150, 20, 20]
             else : couleur = [0, 100, 0]
             fenetre.fill(couleur, (i * taille_pixel+120, j * taille_pixel, taille_pixel - 1, taille_pixel - 1))
-
     pygame.display.flip()
 
 def etat_suivant(plateau):
@@ -97,11 +96,21 @@ def pause(plateau):
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     pause = False
-            elif event.type == MOUSEBUTTONDOWN and start_on:
-                pause = False
-            elif event.type == MOUSEBUTTONDOWN and init_on: #ou UP
-                afficher(plateau)
-                init()
+            elif event.type == MOUSEBUTTONDOWN:
+                if start_on:
+                    pause = False
+                elif init_on:
+                    afficher(plateau)
+                    init()
+                elif plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] == 0:
+                    print('oui', plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4], '+', ((mouse_xy[0]-120)/4), (mouse_xy[1]/4))
+                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 1
+                    afficher(plateau)
+                else:
+                    print('non', plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4])
+                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 0
+                    afficher(plateau)
+    return plateau
 
 def accueil_font():
     font_1 = pygame.font.Font('fonts/visitor1.ttf', 40)
@@ -174,7 +183,7 @@ pygame.display.flip()
 
 while fonctionnement:
     mouse_xy = pygame.mouse.get_pos()
-
+    print(mouse_xy)
     init_on = init_bouton.collidepoint(mouse_xy)
     start_on = start_bouton.collidepoint(mouse_xy)
     stop_on = stop_bouton.collidepoint(mouse_xy)
@@ -183,7 +192,7 @@ while fonctionnement:
 
     if lancement:
         lancement = False
-        pause(plateau)
+        plateau = pause(plateau)
 
     generation += 1
 
@@ -193,12 +202,20 @@ while fonctionnement:
         elif event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 fonctionnement = False
-        elif event.type == MOUSEBUTTONDOWN and init_on:
-            generation = 0
-            init()
-        elif event.type == MOUSEBUTTONDOWN and stop_on:
-            generation = 0
-            pause(plateau)
+        elif event.type == MOUSEBUTTONDOWN:
+            if init_on:
+                generation = 0
+                init()
+            elif stop_on:
+                generation = 0
+                plateau = pause(plateau)
+            else:
+                if plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] == 0:
+                    print('oui',  plateau[(mouse_xy[1]-120)/4][mouse_xy[0]/4])
+                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 1
+                else:
+                    print('non',  plateau[(mouse_xy[1]-120)/4][mouse_xy[0]/4])
+                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 0
 
     pygame.time.wait(temp_pause)
 
