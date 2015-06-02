@@ -4,7 +4,8 @@ import pygame
 import pygame.gfxdraw
 from pygame.locals import *
 
-
+#i = x = abscisse
+#j = y = ordonee
 largeur = 180
 hauteur = 150
 taille_pixel = 4
@@ -34,7 +35,8 @@ def afficher(plateau):
             elif plateau[i][j] == 1: couleur = [255, 255, 255]
             elif plateau[i][j] == 2: couleur = [150, 20, 20]
             else : couleur = [0, 100, 0]
-            pygame.gfxdraw.box(fenetre, (taille_pixel*i+120, taille_pixel*j, taille_pixel, taille_pixel), couleur)
+            fenetre.fill(couleur, (i * taille_pixel+120, j * taille_pixel, taille_pixel - 1, taille_pixel - 1))
+
     pygame.display.flip()
 
 def etat_suivant(plateau):
@@ -60,7 +62,7 @@ def etat_suivant(plateau):
             nb_vivante = alive(i, j)
             if nb_vivante == 3 : plateau2[i][j] = 1
             elif nb_vivante == 2 : plateau2[i][j] = plateau[i][j]
-            elif nb_vivante > 3 : plateau2[i][j] = 0
+            elif nb_vivante > 3 : plateau2[i][j] = 2
             elif nb_vivante < 2 : plateau2[i][j] = 0
     return plateau2
 
@@ -140,18 +142,17 @@ def main_font():
     font = pygame.font.Font('fonts/visitor1.ttf', 15)
 
     init_text = font.render("Initialiser", 1, (255, 255, 255))
-    init_text_pos = init_text.get_rect(centerx=55, centery=20)
+    init_text_pos = init_text.get_rect(centerx=55, centery=23)
     background.blit(init_text, init_text_pos)
 
     start_text = font.render("Start", 1, (255, 255, 255))
-    start_text_pos = start_text.get_rect(centerx=55, centery=60)
+    start_text_pos = start_text.get_rect(centerx=55, centery=63)
     background.blit(start_text, start_text_pos)
 
     stop_text = font.render("Stop", 1, (255, 255, 255))
-    stop_text_pos = stop_text.get_rect(centerx=55, centery=110)
+    stop_text_pos = stop_text.get_rect(centerx=55, centery=113)
     background.blit(stop_text, stop_text_pos)
     return background
-
 
 fonctionnement = True
 lancement = True
@@ -160,11 +161,11 @@ temp_pause = 0
 
 accueil()
 
-background.fill((100, 25, 25))
+background.fill((40, 40, 40))
 
-init_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 10, 90, 40])
-start_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 60, 90, 40])
-stop_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 110, 90, 40])
+init_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 10, 90, 25])
+start_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 60, 90, 25])
+stop_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 110, 90, 25])
 
 main_font()
 
@@ -178,7 +179,6 @@ while fonctionnement:
     start_on = start_bouton.collidepoint(mouse_xy)
     stop_on = stop_bouton.collidepoint(mouse_xy)
 
-    print('Generation : ',generation)
     plateau = main(plateau)
 
     if lancement:
