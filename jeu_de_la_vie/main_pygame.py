@@ -9,11 +9,6 @@ from pygame.locals import *
 largeur = 180
 hauteur = 150
 taille_pixel = 4
-plateau=[]
-plateau0=[]
-for i in range(hauteur):
-    plateau.append([0]*largeur)
-    plateau0.append([0]*largeur)
 
 pygame.init()
 
@@ -25,9 +20,20 @@ background.fill((255, 255, 255))
 
 pygame.display.set_caption('Game Of Life')
 
+def init_plateau():
+    ##############################################
+    'met les plateau a 0'
+    ##############################################
+    plateau=[]
+    plateau0=[]
+    for i in range(hauteur):
+        plateau.append([0]*largeur)
+        plateau0.append([0]*largeur)
+    return plateau, plateau0
+
 def afficher(plateau):
     ##############################################
-    'change les pixels'
+    'affiche euh... l\'affichage'
     ##############################################
     for i in range(hauteur):
         for j in range(largeur):
@@ -73,7 +79,10 @@ def main(plateau):
     afficher(plateau2)
     return plateau2
 
-def init():
+def aleatoire():
+    ##############################################
+    'change l\'etat des cellules aleatoirement'
+    ##############################################
     for i in range(hauteur):
         for j in range(largeur):
             rd = random.random()
@@ -85,11 +94,15 @@ def init():
                 plateau[i][j] = 1
 
 def pause(plateau):
+    ##############################################
+    'boucle infinie de... la pause'
+    ##############################################
     pause = True
     while pause:
         mouse_xy = pygame.mouse.get_pos()
-        init_on = init_bouton.collidepoint(mouse_xy)
+        aleatoire_on = aleatoire_bouton.collidepoint(mouse_xy)
         start_on = start_bouton.collidepoint(mouse_xy)
+        reinitialisation_on = reinitialisation_bouton.collidepoint(mouse_xy)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
@@ -99,20 +112,25 @@ def pause(plateau):
             elif event.type == MOUSEBUTTONDOWN:
                 if start_on:
                     pause = False
-                elif init_on:
+                elif aleatoire_on:
+                    aleatoire()
                     afficher(plateau)
-                    init()
-                elif plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] == 0:
-                    print('oui', plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4], '+', ((mouse_xy[0]-120)/4), (mouse_xy[1]/4))
-                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 1
+                elif reinitialisation_on:
+                    plateau, plateau0 = init_plateau()
                     afficher(plateau)
-                else:
-                    print('non', plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4])
-                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 0
-                    afficher(plateau)
+                elif mouse_xy[0] > 120:
+                    if plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] == 0:
+                        plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 1
+                        afficher(plateau)
+                    else:
+                        plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 0
+                        afficher(plateau)
     return plateau
 
 def accueil_font():
+    ##############################################
+    'import les police et place le text de l\'accueil'
+    ##############################################
     font_1 = pygame.font.Font('fonts/visitor1.ttf', 40)
     font_2 = pygame.font.Font('fonts/visitor1.ttf', 25)
 
@@ -126,6 +144,9 @@ def accueil_font():
     return background
 
 def accueil():
+    ##############################################
+    'boucle infinie de l\'accueil'
+    ##############################################
     accueil = True
     demarrer_bouton = pygame.draw.rect(fenetre, [25, 25, 100], [background.get_width()/2.5, background.get_width()/2.2, 150, 40])
 
@@ -148,9 +169,12 @@ def accueil():
                 accueil = False
 
 def main_font():
+    ##############################################
+    'import la police et place les text des boutons'
+    ##############################################
     font = pygame.font.Font('fonts/visitor1.ttf', 15)
 
-    init_text = font.render("Initialiser", 1, (255, 255, 255))
+    init_text = font.render("Aleatoire", 1, (255, 255, 255))
     init_text_pos = init_text.get_rect(centerx=55, centery=23)
     background.blit(init_text, init_text_pos)
 
@@ -159,7 +183,11 @@ def main_font():
     background.blit(start_text, start_text_pos)
 
     stop_text = font.render("Stop", 1, (255, 255, 255))
-    stop_text_pos = stop_text.get_rect(centerx=55, centery=113)
+    stop_text_pos = stop_text.get_rect(centerx=55, centery=103)
+    background.blit(stop_text, stop_text_pos)
+
+    stop_text = font.render("Reinitialisation", 1, (255, 255, 255))
+    stop_text_pos = stop_text.get_rect(centerx=60, centery=143)
     background.blit(stop_text, stop_text_pos)
     return background
 
@@ -167,14 +195,16 @@ fonctionnement = True
 lancement = True
 generation = 0
 temp_pause = 0
+plateau, plateau0 = init_plateau()
 
 accueil()
 
 background.fill((40, 40, 40))
 
-init_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 10, 90, 25])
+aleatoire_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 10, 90, 25])
 start_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 60, 90, 25])
-stop_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 110, 90, 25])
+stop_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 100, 90, 25])
+reinitialisation_bouton = pygame.draw.rect(fenetre, [0, 0, 0], [10, 130, 90, 25])
 
 main_font()
 
@@ -183,10 +213,10 @@ pygame.display.flip()
 
 while fonctionnement:
     mouse_xy = pygame.mouse.get_pos()
-    print(mouse_xy)
-    init_on = init_bouton.collidepoint(mouse_xy)
+    aleatoire_on = aleatoire_bouton.collidepoint(mouse_xy)
     start_on = start_bouton.collidepoint(mouse_xy)
     stop_on = stop_bouton.collidepoint(mouse_xy)
+    reinitialisation_on = reinitialisation_bouton.collidepoint(mouse_xy)
 
     plateau = main(plateau)
 
@@ -203,25 +233,19 @@ while fonctionnement:
             if event.key == K_ESCAPE:
                 fonctionnement = False
         elif event.type == MOUSEBUTTONDOWN:
-            if init_on:
+            if aleatoire_on:
                 generation = 0
-                init()
+                aleatoire()
             elif stop_on:
                 generation = 0
                 plateau = pause(plateau)
+            elif reinitialisation_on:
+                plateau, plateau0 = init_plateau()
             else:
-                if plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] == 0:
-                    print('oui',  plateau[(mouse_xy[1]-120)/4][mouse_xy[0]/4])
-                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 1
-                else:
-                    print('non',  plateau[(mouse_xy[1]-120)/4][mouse_xy[0]/4])
-                    plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 0
+                if mouse_xy[0] > 120:
+                    if plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] == 0:
+                        plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 1
+                    else:
+                        plateau[(mouse_xy[0]-120)/4][mouse_xy[1]/4] = 0
 
     pygame.time.wait(temp_pause)
-
-#modif cellule par souri
-#couleur :
-#citoyen = 0 0 0
-#cadavre = 50 50 50
-#zombie = largeur 20 20
-#fond = 0 0 0
