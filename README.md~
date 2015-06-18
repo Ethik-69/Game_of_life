@@ -1,5 +1,5 @@
 # Python
-cryptage -> cryptage et decryptage d'un fichier txt
+cryptage -> cryptage et decryptage d'un fichier txt avec interface graphique avec le module Tkinter
 
 Horloge -> une 'horloge' fait en Python avec le module pixel
 
