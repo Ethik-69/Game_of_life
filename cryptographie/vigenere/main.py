@@ -11,42 +11,42 @@ def ouvrir_fichier():
     return contenu_fichier, path_fichier
 
 def chiffrer(pos_lettre, cle):
-    transfer = []
+    buffer = []
     retour = ''
     i = 0
     contenu_fichier, path_fichier = ouvrir_fichier()
-    nouveau_fichier = open(path_fichier, 'w')
     for lettre in contenu_fichier:
-        if lettre == ' ': transfer.append(' ')
+        if lettre == ' ': buffer.append(' ')
         elif lettre.lower() in pos_lettre:
             if i == len(cle) : i = 0
-            transfer.append(pos_lettre[lettre.lower()]+pos_lettre[cle[i]])
+            buffer.append(pos_lettre[lettre.lower()]+pos_lettre[cle[i]])
             i+=1
 
-    for i in range(len(transfer)):
-        if transfer[i] == ' ': retour = retour + ' '
-        elif transfer[i] > 26 : transfer[i] -= 26
-        retour = retour + ''.join([cle for cle, valeur in pos_lettre.items() if valeur==transfer[i]])
+    for i in range(len(buffer)):
+        if buffer[i] == ' ': retour = retour + ' '
+        elif buffer[i] > 26 : buffer[i] -= 26
+        retour = retour + ''.join([cle for cle, valeur in pos_lettre.items() if valeur==buffer[i]])
+    nouveau_fichier = open(path_fichier, 'w')
     nouveau_fichier.write(retour)
     nouveau_fichier.close()
 
 def dechiffrer(pos_lettre, cle):
-    transfer = []
+    buffer = []
     retour = ''
     i = 0
     contenu_fichier, path_fichier = ouvrir_fichier()
-    nouveau_fichier = open(path_fichier, 'w')
     for lettre in contenu_fichier:
-        if lettre == ' ': transfer.append(' ')
+        if lettre == ' ': buffer.append(' ')
         elif lettre.lower() in pos_lettre:
             if i == len(cle) : i = 0
-            transfer.append(pos_lettre[lettre.lower()]-pos_lettre[cle[i]])
+            buffer.append(pos_lettre[lettre.lower()]-pos_lettre[cle[i]])
             i+=1
 
-    for i in range(len(transfer)):
-        if transfer[i] == ' ': retour = retour + ' '
-        elif transfer[i] < 1 : transfer[i] += 26
-        retour = retour + ''.join([cle for cle, valeur in pos_lettre.items() if valeur==transfer[i]])
+    for i in range(len(buffer)):
+        if buffer[i] == ' ': retour = retour + ' '
+        elif buffer[i] < 1 : buffer[i] += 26
+        retour = retour + ''.join([cle for cle, valeur in pos_lettre.items() if valeur==buffer[i]])
+    nouveau_fichier = open(path_fichier, 'w')
     nouveau_fichier.write(retour)
     nouveau_fichier.close()
 
@@ -63,5 +63,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#Dans ce mini tutoriel nous allons nous interesser aux dictionnaires dictionary en anglais Les dictionnaires sont des objets de python permettant dassocier à un ensemble de cles keys une ou des valeurs values Par exemple comme pour un carnet dadresses où à un nom de famille key vous pouvez associer differentes informations values prenom adresse numero de telephone entreprise etc Vous vous apercevrez rapidement avec vos applications python que cette fonctionnalite est particulierement interessante dans de nombreuse situations
