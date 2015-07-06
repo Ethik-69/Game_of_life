@@ -1,11 +1,11 @@
 # Python
-cryptage -> cryptage et decryptage d'un fichier txt avec interface graphique avec le module Tkinter
+cryptographie -> chiffre de ceasar et chiffre de vigénere
 
 Horloge -> une 'horloge' fait en Python avec le module pixel
 
     lancez horloge.py
 
-Site Flask -> site fait en Python avec flask (= sinatra)  
+Site Flask -> site fait en Python avec flask (= sinatra)
     
     installation de Flask => http://flask.pocoo.org/docs/0.10/installation/
     (en sautant l'étape des virtual-env)
