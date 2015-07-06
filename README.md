@@ -1,5 +1,5 @@
 # Python
-cryptage -> cryptage et decryptage d'un fichier txt avec interface graphique avec le module Tkinter
+cryptographie -> chiffre de ceasar et chiffre de vigénere
 
 Horloge -> une 'horloge' fait en Python avec le module pixel
 
