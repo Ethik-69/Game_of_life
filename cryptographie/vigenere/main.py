@@ -2,10 +2,20 @@
 # -*- coding:utf-8 -*-
 import os
 
-def chiffrer(contenu_fichier, pos_lettre, cle):
+def ouvrir_fichier():
+    path_fichier = raw_input('fichier a utiliser : ')
+    fichier = open(path_fichier, 'r+')
+    contenu_fichier = fichier.read()
+    fichier.close()
+    os.remove(path_fichier)
+    return contenu_fichier, path_fichier
+
+def chiffrer(pos_lettre, cle):
     transfer = []
     retour = ''
     i = 0
+    contenu_fichier, path_fichier = ouvrir_fichier()
+    nouveau_fichier = open(path_fichier, 'w')
     for lettre in contenu_fichier:
         if lettre == ' ': transfer.append(' ')
         elif lettre.lower() in pos_lettre:
@@ -17,12 +27,15 @@ def chiffrer(contenu_fichier, pos_lettre, cle):
         if transfer[i] == ' ': retour = retour + ' '
         elif transfer[i] > 26 : transfer[i] -= 26
         retour = retour + ''.join([cle for cle, valeur in pos_lettre.items() if valeur==transfer[i]])
-    return retour
+    nouveau_fichier.write(retour)
+    nouveau_fichier.close()
 
-def dechiffrer(contenu_fichier, pos_lettre, cle):
+def dechiffrer(pos_lettre, cle):
     transfer = []
     retour = ''
     i = 0
+    contenu_fichier, path_fichier = ouvrir_fichier()
+    nouveau_fichier = open(path_fichier, 'w')
     for lettre in contenu_fichier:
         if lettre == ' ': transfer.append(' ')
         elif lettre.lower() in pos_lettre:
@@ -34,34 +47,18 @@ def dechiffrer(contenu_fichier, pos_lettre, cle):
         if transfer[i] == ' ': retour = retour + ' '
         elif transfer[i] < 1 : transfer[i] += 26
         retour = retour + ''.join([cle for cle, valeur in pos_lettre.items() if valeur==transfer[i]])
-    return retour
+    nouveau_fichier.write(retour)
+    nouveau_fichier.close()
 
 def main():
     pos_lettre = {'a':1,'b':2,'c':3,'d':4,'e':5,'f':6,'g':7,'h':8,'i':9,'j':10,'k':11,'l':12,'m':13,'n':14,'o':15,'p':16,'q':17,'r':18,'s':19,'t':20,'u':21,'v':22,'w':23,'x':24,'y':25,'z':26}
     cle = 'simplonve'
-
-    while True:
-        path_fichier = raw_input('fichier a utiliser : ')
-        fichier = open(path_fichier, 'r+')
-
-        contenu_fichier = fichier.read()
-
+    fonctionnement = True
+    while fonctionnement:
         choix = input('crypt 1 ou decrypt 2 : ')
-
-        if choix == 1:
-            os.remove(path_fichier)
-            nouveau_fichier = open(path_fichier, 'w')
-            nouveau_fichier.write(chiffrer(contenu_fichier, pos_lettre, cle))
-            fichier.close()
-            nouveau_fichier.close()
-
-        elif choix == 2:
-            os.remove(path_fichier)
-            nouveau_fichier = open(path_fichier, 'w')
-            nouveau_fichier.write(dechiffrer(contenu_fichier, pos_lettre, cle))
-            fichier.close()
-            nouveau_fichier.close()
-
+        if choix == 1: chiffrer(pos_lettre, cle)
+        elif choix == 2: dechiffrer(pos_lettre, cle)
+        else: fonctionnement = False
 
 
 if __name__ == '__main__':
