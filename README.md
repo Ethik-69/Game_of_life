@@ -1,5 +1,5 @@
 # Python
-cryptographie -> chiffre de ceasar et chiffre de vigénere
+cryptographie -> chiffre de ceasar et chiffre de vigénere (pour fichier .txt)
 
 Horloge -> une 'horloge' fait en Python avec le module pixel
 
