@@ -19,6 +19,8 @@ Bataille navale -> un petit jeu de bataille navale 1 joueur 2 bateaux
 
 Chiffre aléatoire -> un nombre entre 0 et 500 à été générer aléatoirement, a vous de le retrouver
 
+nombre_premier -> determine si un nombre passer en argument (au lancement du fichier) est premier ou non
+
 Live rando -> Chiffre aléatoire en live
 
 import_json -> Traitement fichier .json
