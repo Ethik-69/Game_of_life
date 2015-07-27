@@ -24,3 +24,5 @@ nombre_premier -> determine si un nombre passer en argument (au lancement du fic
 Live rando -> Chiffre aléatoire en live
 
 import_json -> Traitement fichier .json
+
+mdp_solide -> crée un mot de passe a partir de chaine données par l'user
