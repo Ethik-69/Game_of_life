@@ -1,8 +1,4 @@
 # Python
-chat -> Réaliser en python avec Tkinter
-
-cryptographie -> chiffre de ceasar et chiffre de vigénere (pour fichier .txt)
-
 Horloge -> une 'horloge' fait en Python avec le module pixel
 
     lancez horloge.py

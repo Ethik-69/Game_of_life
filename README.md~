@@ -19,4 +19,4 @@ Jeu de la vie -> https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 import_json -> Traitement fichier .json
 
-mdp_solide -> crée un mot de passe a partir de chaine de caractères données par l'user
+mdp_solide -> crée un mot de passe a partir de plusieurs chaines de caractères données par l'user
