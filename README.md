@@ -1,11 +1,13 @@
 # Python
+chat -> Réaliser en python avec Tkinter
+
 cryptographie -> chiffre de ceasar et chiffre de vigénere (pour fichier .txt)
 
 Horloge -> une 'horloge' fait en Python avec le module pixel
 
     lancez horloge.py
 
-Site Flask -> site fait en Python avec flask (= sinatra)
+Site Flask -> site réalisé en Python avec flask (= sinatra)
     
     installation de Flask => http://flask.pocoo.org/docs/0.10/installation/
     (en sautant l'étape des virtual-env)
@@ -17,4 +19,4 @@ Jeu de la vie -> https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 import_json -> Traitement fichier .json
 
-mdp_solide -> crée un mot de passe a partir de chaine données par l'user
+mdp_solide -> crée un mot de passe a partir de plusieurs chaines de caractères données par l'user
