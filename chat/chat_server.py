@@ -6,37 +6,40 @@ import socket, sys, os, threading
 
 # Adresse ip et port utilisés
 HOST = os.environ.get('RDB_HOST') or '127.0.0.1'
-PORT = 10000
+PORT = 10001
 
 class ThreadClient(threading.Thread):
     '''Thread pour gérer la connexion avec un client'''
     def __init__(self, conn):
         threading.Thread.__init__(self)
         self.connexion = conn
+        self.nom = ''
 
     def run(self):
         # Dialogue avec le client :
-        nom = ''
         while 1:
             msgClient = str(self.connexion.recv(1024))
             msgClient = msgClient[2:len(msgClient)-1]
             if msgClient[:15] == 'identification-':
-                nom = msgClient[15:]
+                self.nom = msgClient[15:]
+                message = "New user : " + self.nom
+                for client in conn_client:
+                    if client != self.getName(): # ne pas le renvoyer à l'émetteur
+                        conn_client[client].send(message.encode())
             else:
                 if msgClient.upper() == "FIN" or msgClient == "":
                     break
-                print(msgClient)
-                message = "%s**%s" % (nom, msgClient)
+                message = "%s**%s" % (self.nom, msgClient)
                 print(message)
                 # Faire suivre le message à tous les autres clients :
-                for cle in conn_client:
-                    if cle != self.getName():      # ne pas le renvoyer à l'émetteur
-                        conn_client[cle].send(message.encode())
+                for client in conn_client:
+                    if client != self.getName(): # ne pas le renvoyer à l'émetteur
+                        conn_client[client].send(message.encode())
 
         # Fermeture de la connexion :
         self.connexion.close()      # couper la connexion côté serveur
         del conn_client[self.getName()]        # supprimer son entrée dans le dictionnaire
-        print("Client %s déconnecté." % nom)
+        print("Client %s déconnecté." % self.nom)
         # Le thread se termine ici
 
 # Initialisation du serveur - Mise en place du socket :
